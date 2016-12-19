@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script type="text/javascript" src="js/jquery-1.9.1.min.js" ></script>
+		<title></title>
+		<style type="text/css">
+			body{margin: 0; padding: 0;overflow: hidden;}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas"></canvas>
+	</body>
+	<script>
+		var canvas=document.getElementById("canvas");
+		var ctx=canvas.getContext("2d");
+		var w=$(document).width();
+		var h=$(document).height();
+		var inmove=false;
+		canvas.width=$(document).width();
+		canvas.height=$(document).height();
+		
+		ctx.fillStyle="#000000";
+		ctx.fillRect(0,0,w,h)
+		
+		canvas.onmousedown=function(e){
+			e.preventDefault();
+			console.log(e.clientX,e.clientY)
+			inmove=true;
+		}
+ 
+		
+		canvas.onmousemove=function(e){
+			e.preventDefault();
+			ctx.lineWidth=5;
+			ctx.strokeStyle="#FFFFFF";
+			if(inmove==true){
+			
+					ctx.lineTo(e.clientX,e.clientY)	
+					console.log(e.clientX,e.clientY)
+					ctx.stroke()
+			
+			}
+			
+		}
+		
+		canvas.onmouseup=function(e){
+			e.preventDefault()
+			inmove=false;
+		}
+		
+		canvas.onmouseout=function(e){
+			e.preventDefault()
+			inmove=false;
+		}
+	</script>
+</html>

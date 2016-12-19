@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title></title>
+		<style type="text/css">
+		 body{margin: 0;padding: 0;overflow: hidden;}
+ 
+    	 #cvs{background-color:#000;}
+		</style>
+	</head>
+	<script src="js/jquery-1.9.1.min.js"></script>
+	<body>
+		<canvas id="cvs"></canvas>
+	</body>
+	<script>
+		var canvas=document.getElementById("cvs")
+		var c=canvas.getContext("2d");
+		canvas.width=$(window).width();
+		canvas.height=$(window).height();
+		var inmove=false;
+		
+		$(window).resize(re)
+		function re(){
+			canvas.width=$(window).width();
+			canvas.height=$(window).height();
+		}
+		var Playanimation=true;
+		var shape=function(x,y,radius,dix,diy){
+			this.x=x;
+			this.y=y;
+			this.radius=radius;
+			this.dix=dix;
+			this.diy=diy;
+		}
+		var shapes=new Array();
+		for(var i=0 ; i<800 ;i++){
+			var x=Math.random()*canvas.width;
+			var y=Math.random()*canvas.height;
+			var raidus=Math.random()*3;
+			var dix=x-canvas.width/2;
+			var diy=y-canvas.height/2;
+			shapes.push(new shape(x,y,raidus,dix,diy));
+		}
+
+		function animate(){
+			c.clearRect(0,0,canvas.width,canvas.height);
+			for(var i=0;i<800;i++){
+				var r=parseInt(Math.random()*255);
+				var g=parseInt(Math.random()*255);
+				var b=parseInt(Math.random()*255);
+				var a1=Math.random();
+				var a=shapes[i];
+				a.x+=a.dix/50;
+				a.y+=a.diy/50;
+				if(a.x<0||a.y<0||a.x>canvas.width||a.y>canvas.height){
+					a.width=a.height=Math.random()*3;
+					a.x=Math.random()*canvas.width;
+					a.y=Math.random()*canvas.height;
+					a.dix=a.x-canvas.width/2;
+					a.diy=a.y-canvas.height/2;
+				};
+				c.beginPath();
+				//颜色随机
+//              c.fillStyle ="rgba("+r+","+g+","+b+","+a1+")";
+                
+			
+				c.fillStyle="#FFFFFF"
+                c.arc(a.x,a.y,a.radius,0,Math.PI*2,false);
+                c.fill(); 
+
+		
+			};
+			if(Playanimation){
+				setTimeout(animate,36)
+			};
+		}
+			animate();
+			
+			canvas.onmousedown=function(e){
+			e.preventDefault();
+			console.log(e.clientX,e.clientY)
+			inmove=true;
+		}
+ 
+		
+		canvas.onmousemove=function(e){
+			e.preventDefault();
+			c.beginPath()
+			c.lineWidth=5;
+			c.strokeStyle="#039702";
+			if(inmove==true){
+				for(var i=0;i<1 ; i++){
+					c.lineTo(e.clientX,e.clientY)	
+					console.log(e.clientX,e.clientY)
+				}
+			c.closePath()
+			c.stroke()
+			}
+			
+		}
+		
+		canvas.onmouseup=function(e){
+			e.preventDefault()
+			inmove=false;
+		}
+		
+		canvas.onmouseout=function(e){
+			e.preventDefault()
+			inmove=false;
+		}
+	</script>
+</html>

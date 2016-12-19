@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			body,p{margin: 0; padding: 0;}
+		</style>
+		<script type="text/javascript" src="js/jquery-1.9.1.min.js" ></script>
+	</head>
+	<body>
+		<p>法可领取额无法地啊啊暗暗佩服了</p>
+	</body>
+	<script type="text/javascript">
+		(function($){
+			$.fn.extend({
+				"height":function(options){
+					if(!isvalid(options))
+					return this;
+					var opts=$.extend({},defaluts,options);
+					this.each(function(){//this代表jquery对象
+					//遍历所有要要用height（）dom
+					var $this=$(this);
+					$this.css({
+						backgroundColor:opts.background,
+						color:opts.foreground
+					});
+					var markup=$this.html();
+					markup=$.fn.height.format(markup);
+					$this.html(markup)
+					});
+				}
+			})
+			var defaluts={
+			foreground:'red',
+			background:'yellow'
+		};
+		//公共的格式化 方法。默认是加粗，用户可以通过覆盖改方法达到不同的格式化效果。
+		$.fn.height.format=function(str){
+			return "<strong>"+str+"<strong/>";
+		}
+		//私有方法，检测参数是否合法
+		function isvalid(options){
+			return !options || (options && typeof options==="object")?true:false;
+		}
+		})(window.jQuery)
+		//默认参数
+		$.fn.height.format=function(txt){
+			return "<em>"+txt+"<em/>"
+		}
+		$(function(){
+			$("p").height({foreground:"orange",background:"#ccc"})
+		})
+	</script>
+</html>
